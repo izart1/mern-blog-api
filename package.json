@@ -1,10 +1,8 @@
 {
   "name": "blog-api",
   "version": "1.0.0",
-  "main": "index.js",
-  "compilerOptions": {
-    "module": "commonjs"
-  },
+  "main": "index.js", 
+  "module": "module", 
   "scripts": {
     "start:dev": "nodemon index.js"
   },
