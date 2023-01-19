@@ -2,7 +2,7 @@
   "name": "blog-api",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "start:dev": "nodemon index.js"
   },
