@@ -39,7 +39,7 @@ app.use(cookieParser());
 app.use('/api', router);
 
 app.use('/uploads', express.static('uploads'));
-const PORT = 5555;
+const PORT = process.env.PORT || 5555;
 
 app.post(
   '/auth/register',
