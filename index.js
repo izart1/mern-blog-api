@@ -27,7 +27,7 @@ const app = express();
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
     if (!fs.existsSync('uploads')) {
-      fs.mkdir('uploads');
+      fs.mkdirSync('uploads');
     }
     cb(null, 'uploads');
   },
@@ -44,7 +44,7 @@ app.use(cookieParser());
 app.use('/api', router);
 
 app.use('/uploads', express.static('uploads'));
-const PORT = process.env.PORT || 6804;
+const PORT = process.env.PORT || 5555;
 
 app.post(
   '/auth/register',
