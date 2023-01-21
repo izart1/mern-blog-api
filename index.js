@@ -4,6 +4,10 @@ import cookieParser from 'cookie-parser';
 import multer from 'multer';
 import cors from 'cors';
 import fs from 'fs';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3354b5f (create uploads folder)
 import router from './router/index.js';
 
 import {
@@ -25,8 +29,13 @@ const app = express();
 
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
+<<<<<<< HEAD
      if (!fs.existsSync('uploads')) {
       fs.mkdirSync('uploads');
+=======
+    if (!fs.existsSync('uploads')) {
+      fs.mkdir('uploads');
+>>>>>>> 3354b5f (create uploads folder)
     }
     cb(null, 'uploads');
   },
@@ -43,7 +52,11 @@ app.use(cookieParser());
 app.use('/api', router);
 
 app.use('/uploads', express.static('uploads'));
+<<<<<<< HEAD
 const PORT = process.env.PORT || 5555;
+=======
+const PORT = process.env.PORT || 6804;
+>>>>>>> 3354b5f (create uploads folder)
 
 app.post(
   '/auth/register',
