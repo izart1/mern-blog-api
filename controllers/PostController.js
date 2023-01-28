@@ -4,19 +4,28 @@ export const getAll = async (req, res) => {
   try {
     const sortBy = req.query.category;
     const user = req.query.user;
-    const page = req.query.page;
+    const page = req.query.page || 1;
 
     const limit = 5;
     const startIndex = (Number(page) - 1) * limit;
-    const total = await PostModel.countDocuments({});
-
+    // const total = await PostModel.countDocuments({});
+    let total;
     let posts;
-    if (user) {
+
+    if (!user && !sortBy) {
+      total = await PostModel.countDocuments({});
+      posts = await PostModel.find().populate('user').populate('comments.user');
+      return res.json(posts);
+    }
+
+    if (user && !sortBy) {
       posts = await PostModel.find({ user: user })
         .skip(startIndex)
         .limit(limit)
         .populate('user')
         .populate('comments.user');
+
+      total = await PostModel.countDocuments({ user: user });
 
       return res.json({
         posts,
@@ -31,6 +40,8 @@ export const getAll = async (req, res) => {
         .limit(limit)
         .populate('user')
         .populate('comments.user');
+
+      total = await PostModel.countDocuments({});
 
       // return res.json(posts);
       return res.json({
@@ -48,6 +59,8 @@ export const getAll = async (req, res) => {
         .populate('user')
         .populate('comments.user');
 
+      total = await PostModel.countDocuments({});
+
       return res.json({
         posts,
         currentPage: Number(page),
@@ -63,6 +76,8 @@ export const getAll = async (req, res) => {
         .populate('user')
         .populate('comments.user');
 
+      total = await PostModel.countDocuments({ tags: '#разработка' });
+
       return res.json({
         posts,
         currentPage: Number(page),
@@ -77,6 +92,8 @@ export const getAll = async (req, res) => {
         .limit(limit)
         .populate('user')
         .populate('comments.user');
+
+      total = await PostModel.countDocuments({ tags: '#спорт' });
 
       return res.json({
         posts,
@@ -272,13 +289,13 @@ export const uncomment = async (req, res) => {
   )
     .populate('comments.user')
     .populate('user')
-    .exec((err, res) => {
+    .exec((err, result) => {
       if (err) {
         return res.status(400).json({
           error: err,
         });
       } else {
-        res.json(res);
+        res.json(result);
       }
     });
 };

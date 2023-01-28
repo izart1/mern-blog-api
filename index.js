@@ -1,14 +1,8 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import cookieParser from 'cookie-parser';
 import multer from 'multer';
 import cors from 'cors';
 import fs from 'fs';
-<<<<<<< HEAD
-=======
-
->>>>>>> 3354b5f (create uploads folder)
-import router from './router/index.js';
 
 import {
   registerValidator,
@@ -29,13 +23,8 @@ const app = express();
 
 const storage = multer.diskStorage({
   destination: (_, __, cb) => {
-<<<<<<< HEAD
-     if (!fs.existsSync('uploads')) {
-      fs.mkdirSync('uploads');
-=======
     if (!fs.existsSync('uploads')) {
-      fs.mkdir('uploads');
->>>>>>> 3354b5f (create uploads folder)
+      fs.mkdirSync('uploads');
     }
     cb(null, 'uploads');
   },
@@ -48,15 +37,9 @@ const upload = multer({ storage });
 
 app.use(cors());
 app.use(express.json());
-app.use(cookieParser());
-app.use('/api', router);
 
 app.use('/uploads', express.static('uploads'));
-<<<<<<< HEAD
 const PORT = process.env.PORT || 5555;
-=======
-const PORT = process.env.PORT || 6804;
->>>>>>> 3354b5f (create uploads folder)
 
 app.post(
   '/auth/register',
@@ -103,6 +86,12 @@ app.put(
   checkAuth,
   handleValidationErrors,
   PostController.comment
+);
+app.put(
+  '/delete/comments/:id',
+  checkAuth,
+  handleValidationErrors,
+  PostController.uncomment
 );
 
 app.listen(PORT, () => {
